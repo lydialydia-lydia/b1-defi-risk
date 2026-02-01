@@ -12,12 +12,14 @@ def simulate_one_step_liquidation(
 ) -> pd.DataFrame:
     """
     One-step liquidation simulation (simplified).
-
     - Trigger: HF < 1
     - Liquidator repays up to close_factor * debt
     - Liquidator receives collateral with liquidation_bonus
     - Execution friction modeled as slippage haircut on collateral proceeds
     """
+
+
+    #Convert collateral amount into USD value at the stressed/spot price
     collateral_value = collateral_amount * price
 
     hf = (collateral_value * liquidation_threshold) / debt_amount
