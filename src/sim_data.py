@@ -12,7 +12,6 @@ def generate_synthetic_positions(
 ) -> pd.DataFrame:
     """
     Generate synthetic lending positions for a single-collateral market.
-
     Assumptions:
     - Collateral: ETH
     - Debt: USD stablecoin (debt price = 1.0)
@@ -31,7 +30,9 @@ def generate_synthetic_positions(
     target_ltv = rng.normal(loc=ltv_center, scale=ltv_spread, size=n_positions)
     target_ltv = np.clip(target_ltv, 0.05, 0.95)
 
+    #Convert collateral amount -> USD value at t=0 price
     collateral_value_init = collateral_amount * collateral_price_init
+    #Debt is proportional to collateral value via target LTV
     debt_amount = collateral_value_init * target_ltv
 
     return pd.DataFrame({
